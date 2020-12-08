@@ -1,0 +1,17 @@
+version: '3'
+volumes:
+  db_data:
+services:
+  php-fpm:
+    build:
+      context: php-fpm
+    volumes:
+      - ../:/var/www
+      - ./php-ini:/usr/local/etc/php/custom.d
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ../:/var/www
+      - ./nginx:/etc/nginx/conf.d/
+    depends_on:
+      - php-fpm
